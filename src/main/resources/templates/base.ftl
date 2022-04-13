@@ -117,7 +117,7 @@
                 <a class="nav-link" href="/signIn">Войти</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/login">Регистрация</a>
+                <a class="nav-link" href="/signUp">Регистрация</a>
             </li>
         </ul>
     </#if>
