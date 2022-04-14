@@ -66,7 +66,7 @@
     <br>
     <div id="error" class="error active"></div>
     <br>
-    <form action="/login" method="post" id="form" onsubmit="return validFunction()">
+    <form action="/signUp" method="post" id="form" onsubmit="return validFunction()">
         <p class="lead">
             Введите никнейм:<br>
             <input name="nickname" type="text" id="nickname" required minlength="5"/><br>
@@ -85,11 +85,6 @@
         <p class="lead">
             Введите электронную почту:<br>
             <input name="email" type="email" id="mail" required/><br>
-        </p>
-
-        <p class="lead">
-            Введите логин:<br>
-            <input name="login" type="text" id="login" onkeyup="showResult(this.value)" required/><br>
         </p>
 
         <p class="lead">
