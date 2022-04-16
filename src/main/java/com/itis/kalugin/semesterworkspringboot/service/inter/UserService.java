@@ -6,4 +6,6 @@ import com.itis.kalugin.semesterworkspringboot.dto.UserDto;
 public interface UserService {
 
     UserDto save(CreateUserDto user);
+
+    UserDto getUserByEmail(String email);
 }

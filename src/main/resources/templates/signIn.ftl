@@ -2,7 +2,7 @@
 
 <#macro title>
 <title>Авторизация</title>
-<link rel="shortcut icon" href="static/img/pancake.jpg" type="image/jpg">
+<link rel="shortcut icon" href="pancake.jpg" type="image/jpg">
 </#macro>
 
 <#macro content>
@@ -15,7 +15,7 @@
 <form action="/signIn" method="post" novalidate>
     <p class="lead">
         Введите логин:<br>
-        <input name="login" type="text"/><br>
+        <input name="email" type="text"/><br>
     </p>
 
     <p class="lead">

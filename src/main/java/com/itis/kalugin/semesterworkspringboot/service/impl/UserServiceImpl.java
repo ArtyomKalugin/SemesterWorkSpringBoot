@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService {
                 user.getSecondName(), DEFAULT_AVATAR, user.getEmail(),
                 encoder.encode(user.getPassword()))));
     }
+
+    @Override
+    public UserDto getUserByEmail(String email) {
+        return UserDto.fromModel(userRepository.getUserByEmail(email));
+    }
 }

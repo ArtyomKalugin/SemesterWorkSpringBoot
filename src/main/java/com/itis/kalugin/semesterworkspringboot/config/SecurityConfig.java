@@ -1,5 +1,6 @@
 package com.itis.kalugin.semesterworkspringboot.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -7,45 +8,75 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    @Autowired
+    private SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler;
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
-        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-        return daoAuthenticationProvider;
-    }
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.authorizeRequests();
-//                .antMatchers("/home")
-//                .authenticated()
-//                .anyRequest().permitAll()
-//                .and()
-//                .formLogin()
-//                .usernameParameter("email")
-//                .defaultSuccessUrl("/home")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutSuccessUrl("/")
-//                .permitAll()
-//                .and().exceptionHandling().accessDeniedPage("/403");
+        httpSecurity.csrf().disable();
+
+        httpSecurity
+                .rememberMe()
+                .tokenRepository(persistentTokenRepository())
+                .rememberMeParameter("rememberMe")
+                .tokenValiditySeconds(60 * 60 * 24 * 365)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/temp").permitAll()
+                .antMatchers("/signUp").permitAll()
+                .antMatchers("/signIn").permitAll()
+                .antMatchers("/info").permitAll()
+                .antMatchers("/").authenticated()
+                .antMatchers("/profile/**").authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/signIn")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/info")
+                .successHandler(savedRequestAwareAuthenticationSuccessHandler)
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/signIn?logout")
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true);
+
     }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
+    }
+
 }

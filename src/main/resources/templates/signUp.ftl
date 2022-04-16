@@ -2,7 +2,7 @@
 <html lang="ru">
 <#macro title>
     <title>Регистрация</title>
-    <link rel="shortcut icon" href="static/img/pancake.jpg" type="image/jpg">
+    <link rel="shortcut icon" href="pancake.jpg" type="image/jpg">
 </#macro>
 
 <#macro content>
@@ -14,12 +14,12 @@
             return isValid;
         }
 
-        function showResult(login) {
+        function showResult(email) {
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
                     if (this.responseText === "taken") {
-                        document.getElementById("error").innerHTML = "Логин уже занят!";
+                        document.getElementById("error").innerHTML = "Аккаунт с такой почтой уже существует!";
                         isValid = false
                     } else {
                         document.getElementById("error").innerHTML = ""
@@ -28,7 +28,7 @@
                     }
                 }
             }
-            xmlhttp.open("GET","/checkLogin?login=" + login, true);
+            xmlhttp.open("GET","/checkEmail?email=" + email, true);
             xmlhttp.send();
         }
 
@@ -74,17 +74,17 @@
 
         <p class="lead">
             Введите имя:<br>
-            <input name="first_name" type="text" required/><br>
+            <input name="firstName" type="text" required/><br>
         </p>
 
         <p class="lead">
             Введите фамилию:<br>
-            <input name="second_name" type="text" required/><br>
+            <input name="secondName" type="text" required/><br>
         </p>
 
         <p class="lead">
             Введите электронную почту:<br>
-            <input name="email" type="email" id="mail" required/><br>
+            <input name="email" type="email" id="mail" onkeyup="showResult(this.value)" required/><br>
         </p>
 
         <p class="lead">

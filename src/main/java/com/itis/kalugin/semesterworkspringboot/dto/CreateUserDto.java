@@ -1,7 +1,10 @@
 package com.itis.kalugin.semesterworkspringboot.dto;
 
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotBlank;
 
+@NoArgsConstructor
 public class CreateUserDto {
 
     @NotBlank(message = "Nickname shouldn't be blank!")
