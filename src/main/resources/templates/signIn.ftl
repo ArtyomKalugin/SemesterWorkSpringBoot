@@ -9,7 +9,6 @@
 <br>
 
 <h1>Авторизация</h1>
-
 <br>
 
 <form action="/signIn" method="post" novalidate>
@@ -29,9 +28,9 @@
 
     <br>
 </form>
-    <#if err?has_content>
+    <#if authenticationFailure?has_content>
         <div class="alert alert-danger" role="alert">
-            ${err}
+            Неверный логин или пароль!
         </div>
     </#if>
 

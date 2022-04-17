@@ -8,18 +8,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class AuthenticationSuccessWithSessionHandler extends SavedRequestAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class AuthenticationSuccessWithSessionHandler extends
+        SavedRequestAwareAuthenticationSuccessHandler
+        implements AuthenticationSuccessHandler {
 
     private final UserService userService;
 
@@ -31,7 +31,9 @@ public class AuthenticationSuccessWithSessionHandler extends SavedRequestAwareAu
         String email = authentication.getName();
         UserDto user = userService.getUserByEmail(email);
         request.getSession().setAttribute("user", user);
+        request.getSession().removeAttribute("authenticationFailure");
 
         response.sendRedirect("/info");
     }
 }
+

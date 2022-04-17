@@ -2,7 +2,7 @@
 
 <#macro title>
 <title>Личный кабинет</title>
-<link rel="shortcut icon" href="static/img/pancake.jpg" type="image/jpg">
+<link rel="shortcut icon" href="pancake.jpg" type="image/jpg">
 </#macro>
 
 <#macro content>
@@ -34,14 +34,14 @@
         </td>
     </tr>
 </table>
-<form action="/cabinet" method="post" novalidate enctype="multipart/form-data">
+<form action="/changeAvatar" method="post" novalidate enctype="multipart/form-data" class="button_load">
     <br>
     <p style="font-size:25px">
-        Смена аватарки
+        Поменять аватарку
     </p>
 
     <p class="lead">
-        <input name="avatar" type="file">
+        <input name="avatar" type="file" accept=".jpg, .png, .jpeg">
     </p>
 
     <p class="lead">

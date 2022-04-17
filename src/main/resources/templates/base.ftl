@@ -108,7 +108,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/cabinet"><strong>${user.nickname}</strong></a>
+                <a class="nav-link" href="/account"><strong>${user.nickname}</strong></a>
             </li>
         </ul>
     <#else>

@@ -3,14 +3,13 @@ package com.itis.kalugin.semesterworkspringboot.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -55,18 +54,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/signIn").permitAll()
                 .antMatchers("/info").permitAll()
                 .antMatchers("/").authenticated()
-                .antMatchers("/profile/**").authenticated()
+                .antMatchers("/account").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/signIn")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/info")
+                .failureUrl("/signIn?reason=error")
                 .successHandler(savedRequestAwareAuthenticationSuccessHandler)
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/signIn?logout")
+                .logoutSuccessUrl("/info")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
 
@@ -78,5 +78,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         jdbcTokenRepository.setDataSource(dataSource);
         return jdbcTokenRepository;
     }
-
 }
