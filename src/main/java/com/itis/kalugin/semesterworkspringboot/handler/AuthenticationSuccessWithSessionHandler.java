@@ -33,7 +33,7 @@ public class AuthenticationSuccessWithSessionHandler extends
         request.getSession().setAttribute("user", user);
         request.getSession().removeAttribute("authenticationFailure");
 
-        response.sendRedirect("/info");
+        response.sendRedirect("/account");
     }
 }
 

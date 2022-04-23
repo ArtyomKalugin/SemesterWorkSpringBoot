@@ -11,6 +11,7 @@ import com.itis.kalugin.semesterworkspringboot.service.inter.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
             String filename = "profilePhoto" + userDto.getId();
 
             Map upload = CloudinaryHelper.getInstance().uploader()
-                    .upload(file, ObjectUtils.asMap("public_id", filename));
+                    .upload(avatar, ObjectUtils.asMap("public_id", filename));
             String url = (String) upload.get("url");
             userDto.setAvatar(url);
             updateUser(userDto);
@@ -76,5 +77,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return userDto;
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(Integer userId) {
+        userRepository.deleteUserById(userId);
     }
 }

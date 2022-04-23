@@ -13,4 +13,6 @@ public interface UserService {
     UserDto updateUser(UserDto user);
 
     UserDto updateAvatar(MultipartFile file, UserDto userDto);
+
+    void deleteUser(Integer userId);
 }

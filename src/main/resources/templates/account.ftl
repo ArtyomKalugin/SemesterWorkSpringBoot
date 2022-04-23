@@ -67,7 +67,7 @@
 <br>
     <tr>
         <td><p class="lead"><a href="/logout">Выйти</a></p></td>
-        <td><p class="lead"><a href="/deleteUser">Удалить аккаунт</a></p></td>
+        <td><p class="lead"><a href="/deleteUser/${user.id}">Удалить аккаунт</a></p></td>
     </tr>
 <br>
 

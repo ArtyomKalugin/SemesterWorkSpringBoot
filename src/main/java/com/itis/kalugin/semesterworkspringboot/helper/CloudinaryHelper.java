@@ -14,8 +14,8 @@ public class CloudinaryHelper {
             Map configMap = new HashMap();
 
             configMap.put("cloud_name", "dwzcudur6");
-            configMap.put("api_key", "586295443946344");
-            configMap.put("api_secret", "WUfk9-waoo6rXuG5O9hls9zmO3U");
+            configMap.put("api_key", "961751873561697");
+            configMap.put("api_secret", "Rz-BAAmqPCLvrDHmrw59xCvMChA");
             cloudinary = new Cloudinary(configMap);
         }
 
