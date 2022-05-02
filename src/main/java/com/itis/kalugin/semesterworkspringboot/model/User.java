@@ -2,6 +2,7 @@ package com.itis.kalugin.semesterworkspringboot.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +26,9 @@ public class User {
     @Column(nullable = false, length = 64)
     private String password;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Recipe> recipes;
+
     public User(int id, String nickname, String firstName, String secondName, String avatar,
                 String email, String password) {
         this.id = id;
@@ -44,6 +48,15 @@ public class User {
         this.avatar = avatar;
         this.email = email;
         this.password = password;
+    }
+
+    public User(int id, String nickname, String firstName, String secondName, String avatar, String email) {
+        this.id = id;
+        this.nickname = nickname;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.avatar = avatar;
+        this.email = email;
     }
 
     public User() {
@@ -104,6 +117,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }

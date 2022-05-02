@@ -22,15 +22,6 @@ public class CreateUserDto {
     @NotBlank(message = "Password shouldn't be blank!")
     private String password;
 
-    public CreateUserDto(String nickname, String firstName, String secondName, String email,
-                         String password) {
-        this.nickname = nickname;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.email = email;
-        this.password = password;
-    }
-
     public String getNickname() {
         return nickname;
     }

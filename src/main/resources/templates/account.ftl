@@ -53,7 +53,6 @@
 <table>
     <tr>
         <td><p class="lead">Ваша почта: ${user.email}</p></td>
-        <td><p class="lead">Ваш id: ${user.id}</p></td>
     </tr>
     <tr>
         <td><p class="lead"><a href="/createRecipe">Добавить рецепт</a></p></td>

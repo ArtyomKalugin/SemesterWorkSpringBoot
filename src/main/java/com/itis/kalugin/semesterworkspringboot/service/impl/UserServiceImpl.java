@@ -41,7 +41,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByEmail(String email) {
-        return UserDto.fromModel(userRepository.getUserByEmail(email).get());
+
+        Optional<User> optionalUser = userRepository.getUserByEmail(email);
+
+        return optionalUser.map(UserDto::fromModel).orElse(null);
+
+    }
+
+    @Override
+    public User getRawUserByEmail(String email) {
+        Optional<User> user = userRepository.getUserByEmail(email);
+
+        return user.get();
     }
 
     @Override

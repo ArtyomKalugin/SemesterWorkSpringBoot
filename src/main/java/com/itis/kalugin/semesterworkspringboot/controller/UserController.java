@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -55,13 +54,12 @@ public class UserController {
                            HttpServletResponse httpServletResponse) throws IOException {
 
         String result;
+        UserDto user = userService.getUserByEmail(email);
 
-        try {
-            userService.getUserByEmail(email);
-            result = "taken";
-
-        } catch (NullPointerException exception) {
+        if (user == null) {
             result = "free";
+        } else {
+            result = "taken";
         }
 
         httpServletResponse.getWriter().write(result);

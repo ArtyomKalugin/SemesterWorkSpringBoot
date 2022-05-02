@@ -2,7 +2,7 @@
 
 <#macro title>
 <title>Добавление рецепта</title>
-<link rel="shortcut icon" href="static/img/pancake.jpg" type="image/png">
+<link rel="shortcut icon" href="pancake.jpg" type="image/png">
 </#macro>
 
 <#macro content>
@@ -24,7 +24,7 @@
     </p>
 
     <p class="lead">
-        <input name="photo" type="file"><br>
+        <input name="photo" type="file" accept=".jpg, .png, .jpeg"><br>
     </p>
     <br>
     <p class="lead"><input type="submit" value="Сохранить"></p>
