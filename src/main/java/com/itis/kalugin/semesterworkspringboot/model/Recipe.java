@@ -13,6 +13,7 @@ public class Recipe {
     private String title;
     private String text;
     private String photo;
+
     private String data;
 
     @ManyToOne(cascade = CascadeType.ALL)

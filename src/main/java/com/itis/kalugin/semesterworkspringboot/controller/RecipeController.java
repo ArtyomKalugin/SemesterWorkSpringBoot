@@ -41,8 +41,45 @@ public class RecipeController {
         List<RecipeDto> allRecipes = recipeService.getAll();
         Collections.reverse(allRecipes);
         session.setAttribute("allRecipes", allRecipes);
+        session.removeAttribute("isMyRecipe");
 
         return "allRecipes";
+    }
+
+    @GetMapping("/myRecipes")
+    public String getMyRecipes(HttpSession session) {
+
+        UserDto user = (UserDto) session.getAttribute("user");
+        List<RecipeDto> allRecipes = recipeService.getAllByUserId(user.getId());
+        Collections.reverse(allRecipes);
+        session.setAttribute("myRecipes", allRecipes);
+        session.removeAttribute("isMyRecipe");
+
+        return "myRecipes";
+    }
+
+    @GetMapping("/deleteRecipe/{recipeId}")
+    public String deleteRecipe(@PathVariable("recipeId") Integer recipeId) {
+        recipeService.deleteRecipeById(recipeId);
+
+        return "redirect:/myRecipes";
+    }
+
+    @GetMapping("/detailRecipe/{recipeId}/{isMyRecipes}")
+    public String getDetailRecipe(@PathVariable("recipeId") Integer recipeId,
+                                  @PathVariable("isMyRecipes") Integer isMyRecipe, HttpSession session) {
+
+        RecipeDto recipe = recipeService.getRecipeById(recipeId);
+        UserDto author = userService.getUserById((recipe.getUserId()));
+
+        if (isMyRecipe == 1) {
+            session.setAttribute("isMyRecipe", true);
+        }
+
+        session.setAttribute("author", author);
+        session.setAttribute("detailRecipe", recipe);
+
+        return "detailRecipe";
     }
 
     @GetMapping("/createRecipe")

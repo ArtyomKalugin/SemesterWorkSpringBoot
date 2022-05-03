@@ -63,7 +63,7 @@
     <div id="result">
         <#if allRecipes?has_content>
                 <#list allRecipes as recipe>
-                    <a href="/detailRecipe/${recipe.id}">
+                    <a href="/detailRecipe/${recipe.id}/0">
                         <div class="alert alert-dark" role="alert">
                             <h2>
                                 ${recipe.title}

@@ -9,6 +9,8 @@ public interface UserService {
 
     UserDto save(CreateUserDto user);
 
+    UserDto getUserById(int userId);
+
     UserDto getUserByEmail(String email);
 
     User getRawUserByEmail(String email);

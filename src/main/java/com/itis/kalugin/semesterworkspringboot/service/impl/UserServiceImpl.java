@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto getUserById(int userId) {
+        return UserDto.fromModel(userRepository.getById(userId));
+    }
+
+    @Override
     public UserDto getUserByEmail(String email) {
 
         Optional<User> optionalUser = userRepository.getUserByEmail(email);

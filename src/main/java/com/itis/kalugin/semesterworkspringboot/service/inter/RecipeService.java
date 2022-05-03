@@ -8,7 +8,13 @@ public interface RecipeService {
 
     RecipeDto save(Recipe recipe);
 
+    RecipeDto getRecipeById(int recipeId);
+
     List<RecipeDto> getAll();
 
     List<RecipeDto> getRecipesByTitleLike(String title);
+
+    List<RecipeDto> getAllByUserId(int userId);
+
+    void deleteRecipeById(int id);
 }
