@@ -45,7 +45,7 @@
             color: black;
         }
         body {
-            background: white url(food.jpeg);
+            background: white url(/food.jpeg);
             background-attachment: fixed;
             background-repeat: repeat-x;
             background-size: 100%;
@@ -84,7 +84,7 @@
 <body>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <a class="navbar-brand" href="/info"><img alt="food_img" src="pancake.jpg" width="50" height="50" class="rounded-circle" style=""></a>
+    <a class="navbar-brand" href="/info"><img alt="food_img" src="/pancake.jpg" width="50" height="50" class="rounded-circle" style=""></a>
 
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
@@ -97,7 +97,7 @@
             <a class="nav-link" href="allArticles.ftl">Статьи</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="allUsers.ftl">Все пользователи</a>
+            <a class="nav-link" href="/allUsers">Все пользователи</a>
         </li>
     </ul>
 

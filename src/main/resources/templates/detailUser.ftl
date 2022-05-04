@@ -2,12 +2,12 @@
 
 <#macro title>
 <title>Кабинет пользователя</title>
-<link rel="shortcut icon" href="static/img/pancake.jpg" type="image/png">
+<link rel="shortcut icon" href="/pancake.jpg" type="image/png">
 </#macro>
 
 <#macro content>
     <br>
-    <p class="lead"><a href="allUsers.ftl">Назад</a></p>
+    <p class="lead"><a href="/allUsers">Назад</a></p>
 
 <#if detailUser?has_content>
     <br>
@@ -40,10 +40,7 @@
     </table>
     <br>
     <p class="lead">Всего рецептов: ${count}</p>
-    <br>
-    <small class="text-muted" style="font-size:20px"><a href="/chat?id=${detailUser.id}">Написать</a></small>
-    <br>
-    <br>
+    <p class="lead">Почта: ${detailUser.email}</p>
 <#else>
     <br>
     <p class="lead"><em>Что-то пошло не так...</em></p>

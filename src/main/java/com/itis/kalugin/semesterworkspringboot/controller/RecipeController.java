@@ -1,12 +1,15 @@
 package com.itis.kalugin.semesterworkspringboot.controller;
 
 import com.cloudinary.utils.ObjectUtils;
+import com.itis.kalugin.semesterworkspringboot.dto.RecipeCommentDto;
 import com.itis.kalugin.semesterworkspringboot.dto.RecipeDto;
 import com.itis.kalugin.semesterworkspringboot.dto.UserDto;
 import com.itis.kalugin.semesterworkspringboot.helper.CloudinaryHelper;
 import com.itis.kalugin.semesterworkspringboot.helper.ImageHelper;
 import com.itis.kalugin.semesterworkspringboot.model.Recipe;
+import com.itis.kalugin.semesterworkspringboot.model.RecipeComment;
 import com.itis.kalugin.semesterworkspringboot.model.User;
+import com.itis.kalugin.semesterworkspringboot.service.inter.RecipeCommentService;
 import com.itis.kalugin.semesterworkspringboot.service.inter.RecipeService;
 import com.itis.kalugin.semesterworkspringboot.service.inter.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +31,14 @@ public class RecipeController {
 
     private final RecipeService recipeService;
     private final UserService userService;
+    private final RecipeCommentService recipeCommentService;
 
     @Autowired
-    public RecipeController(RecipeService recipeService, UserService userService) {
+    public RecipeController(RecipeService recipeService, UserService userService,
+                            RecipeCommentService recipeCommentService) {
         this.recipeService = recipeService;
         this.userService = userService;
+        this.recipeCommentService = recipeCommentService;
     }
 
     @GetMapping("/allRecipes")
@@ -71,9 +77,14 @@ public class RecipeController {
 
         RecipeDto recipe = recipeService.getRecipeById(recipeId);
         UserDto author = userService.getUserById((recipe.getUserId()));
+        List<RecipeCommentDto> comments = recipeCommentService.getAllByRecipeId(recipe.getId());
 
         if (isMyRecipe == 1) {
             session.setAttribute("isMyRecipe", true);
+        }
+
+        if (comments.size() != 0) {
+            session.setAttribute("recipeComments", comments);
         }
 
         session.setAttribute("author", author);

@@ -1,6 +1,7 @@
 package com.itis.kalugin.semesterworkspringboot.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "recipe")
@@ -19,6 +20,9 @@ public class Recipe {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<RecipeComment> comments;
 
     public Recipe(String title, String text, String photo, String data, User user) {
         this.title = title;

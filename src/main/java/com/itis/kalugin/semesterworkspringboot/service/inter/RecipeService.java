@@ -10,6 +10,8 @@ public interface RecipeService {
 
     RecipeDto getRecipeById(int recipeId);
 
+    Recipe getRawRecipeById(int recipeId);
+
     List<RecipeDto> getAll();
 
     List<RecipeDto> getRecipesByTitleLike(String title);

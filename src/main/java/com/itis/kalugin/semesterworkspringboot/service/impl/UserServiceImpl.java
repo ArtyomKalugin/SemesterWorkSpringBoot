@@ -16,8 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -37,6 +39,15 @@ public class UserServiceImpl implements UserService {
         return UserDto.fromModel(userRepository.save(new User(user.getNickname(), user.getFirstName(),
                 user.getSecondName(), DEFAULT_AVATAR, user.getEmail(),
                 encoder.encode(user.getPassword()))));
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<User> allUsers = userRepository.findAll();
+
+        return allUsers.stream()
+                .map(UserDto::fromModel)
+                .collect(Collectors.toList());
     }
 
     @Override

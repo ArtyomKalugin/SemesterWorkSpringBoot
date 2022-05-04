@@ -32,6 +32,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public Recipe getRawRecipeById(int recipeId) {
+        return recipeRepository.findById(recipeId).get();
+    }
+
+    @Override
     public List<RecipeDto> getAll() {
         List<Recipe> allRecipes = recipeRepository.findAll();
 

@@ -36,14 +36,15 @@
 
         <br>
 
-        <#if isComments??>
-                <p class="lead">Комментарии:</p>
+        <#if recipeComments?has_content>
+                <br>
+                <p class="lead"><strong>Комментарии:</strong></p>
 
-                <#list comments as comment>
+                <#list recipeComments as comment>
                     <table>
                         <tr>
                             <td><img alt="user_img" src="${comment.user.avatar}" width="50" height="50" class="rounded-circle"></td>
-                            <td><strong style="font-size:20px"><a href="/detailUser?id=${comment.user.id}">${comment.user.nickname}</a></strong></td>
+                            <td><strong style="font-size:20px"><a href="/detailUser/${comment.user.id}">${comment.user.nickname}</a></strong></td>
                         </tr>
                     </table>
                     <div class="alert alert-dark" role="alert">
@@ -55,7 +56,7 @@
         </#if>
 
             <#if user?has_content>
-                <form action="/detailRecipe/${detailRecipe.id}" method="post" novalidate>
+                <form action="/createRecipeComment/${detailRecipe.id}/0" method="post" novalidate>
                     <p class="lead">Введите комментарий:</p>
                     <p class="lead">
                         <label>

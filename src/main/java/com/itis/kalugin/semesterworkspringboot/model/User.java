@@ -29,6 +29,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Recipe> recipes;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<RecipeComment> recipeComments;
+
     public User(int id, String nickname, String firstName, String secondName, String avatar,
                 String email, String password) {
         this.id = id;

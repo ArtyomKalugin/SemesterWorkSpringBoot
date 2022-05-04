@@ -2,6 +2,7 @@ package com.itis.kalugin.semesterworkspringboot.controller;
 
 import com.itis.kalugin.semesterworkspringboot.dto.CreateUserDto;
 import com.itis.kalugin.semesterworkspringboot.dto.UserDto;
+import com.itis.kalugin.semesterworkspringboot.service.inter.RecipeService;
 import com.itis.kalugin.semesterworkspringboot.service.inter.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,15 +16,19 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
+    private final RecipeService recipeService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RecipeService recipeService) {
         this.userService = userService;
+        this.recipeService = recipeService;
     }
 
     @GetMapping("/signIn")
@@ -86,5 +91,25 @@ public class UserController {
         userService.deleteUser(id);
 
         return "redirect:/logout";
+    }
+
+    @GetMapping("/detailUser/{userId}")
+    public String getDetailUser(@PathVariable("userId") Integer id, HttpSession session) {
+        UserDto detailUser = userService.getUserById(id);
+        int count = recipeService.getAllByUserId(id).size();
+
+        session.setAttribute("detailUser", detailUser);
+        session.setAttribute("count", count);
+
+        return "detailUser";
+    }
+
+    @GetMapping("/allUsers")
+    public String getAllUsers(HttpSession session) {
+        List<UserDto> allUsers = userService.getAllUsers();
+        Collections.reverse(allUsers);
+        session.setAttribute("allUsers", allUsers);
+
+        return "allUsers";
     }
 }

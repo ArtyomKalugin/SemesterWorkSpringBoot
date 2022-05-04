@@ -2,7 +2,7 @@
 
 <#macro title>
     <title>Все пользователи</title>
-    <link rel="shortcut icon" href="static/img/pancake.jpg" type="image/png">
+    <link rel="shortcut icon" href="pancake.jpg" type="image/png">
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
@@ -42,10 +42,35 @@
         </p>
 
         <br>
-        <p class="lead" style="margin-right: 1000px;">
-            <input type="button" value="Показать всех" onclick="showAll()">
-        </p>
     </form>
     <br>
-    <div id="result"></div>
+    <br>
+    <br>
+
+    <#if allUsers?has_content>
+        <div id="result">
+            <#list allUsers as user>
+                <a href="/detailUser/${user.id}">
+                    <div class="alert alert-dark" role="alert">
+                        <table>
+                            <tr>
+                                <td>
+                                    <img alt="user_img" src="${user.avatar}"width="50" height="50" class="rounded-circle">
+                                </td>
+                                <td>
+                                    <h3>
+                                        <strong>
+                                            ${user.nickname}
+                                        </strong>
+                                    </h3>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </a>
+            </#list>
+        </div>
+    <#else>
+        <p class="lead">Нет пользователей!</p>
+    </#if>
 </#macro>
