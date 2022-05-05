@@ -6,8 +6,8 @@ import com.itis.kalugin.semesterworkspringboot.dto.RecipeDto;
 import com.itis.kalugin.semesterworkspringboot.dto.UserDto;
 import com.itis.kalugin.semesterworkspringboot.helper.CloudinaryHelper;
 import com.itis.kalugin.semesterworkspringboot.helper.ImageHelper;
+import com.itis.kalugin.semesterworkspringboot.helper.TextHelper;
 import com.itis.kalugin.semesterworkspringboot.model.Recipe;
-import com.itis.kalugin.semesterworkspringboot.model.RecipeComment;
 import com.itis.kalugin.semesterworkspringboot.model.User;
 import com.itis.kalugin.semesterworkspringboot.service.inter.RecipeCommentService;
 import com.itis.kalugin.semesterworkspringboot.service.inter.RecipeService;
@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class RecipeController {
@@ -46,6 +47,12 @@ public class RecipeController {
 
         List<RecipeDto> allRecipes = recipeService.getAll();
         Collections.reverse(allRecipes);
+
+        allRecipes = allRecipes.stream()
+                .map(recipe -> new RecipeDto(recipe.getId(), recipe.getTitle(), TextHelper.editText(recipe.getText()),
+                        recipe.getPhoto(), recipe.getData(), recipe.getUserId(), recipe.getUserNickname()))
+                .collect(Collectors.toList());
+
         session.setAttribute("allRecipes", allRecipes);
         session.removeAttribute("isMyRecipe");
 
@@ -58,6 +65,12 @@ public class RecipeController {
         UserDto user = (UserDto) session.getAttribute("user");
         List<RecipeDto> allRecipes = recipeService.getAllByUserId(user.getId());
         Collections.reverse(allRecipes);
+
+        allRecipes = allRecipes.stream()
+                .map(recipe -> new RecipeDto(recipe.getId(), recipe.getTitle(), TextHelper.editText(recipe.getText()),
+                        recipe.getPhoto(), recipe.getData(), recipe.getUserId(), recipe.getUserNickname()))
+                .collect(Collectors.toList());
+
         session.setAttribute("myRecipes", allRecipes);
         session.removeAttribute("isMyRecipe");
 

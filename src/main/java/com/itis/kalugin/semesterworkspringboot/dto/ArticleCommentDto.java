@@ -1,21 +1,21 @@
 package com.itis.kalugin.semesterworkspringboot.dto;
 
+import com.itis.kalugin.semesterworkspringboot.model.ArticleComment;
 import com.itis.kalugin.semesterworkspringboot.model.RecipeComment;
 import com.itis.kalugin.semesterworkspringboot.model.User;
 
-
-public class RecipeCommentDto {
+public class ArticleCommentDto {
 
     private int id;
     private String text;
     private User user;
-    private int recipeId;
+    private int articleId;
 
-    public RecipeCommentDto(int id, String text, User user, int recipeId) {
+    public ArticleCommentDto(int id, String text, User user, int articleId) {
         this.id = id;
         this.text = text;
         this.user = user;
-        this.recipeId = recipeId;
+        this.articleId = articleId;
     }
 
     public int getId() {
@@ -42,16 +42,16 @@ public class RecipeCommentDto {
         this.user = user;
     }
 
-    public int getRecipeId() {
-        return recipeId;
+    public int getArticleId() {
+        return articleId;
     }
 
-    public void setRecipeId(int recipeId) {
-        this.recipeId = recipeId;
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
     }
 
-    public static RecipeCommentDto fromModel(RecipeComment comment) {
-        return new RecipeCommentDto(comment.getId(), comment.getText(), comment.getUser(),
-                comment.getRecipe().getId());
+    public static ArticleCommentDto fromModel(ArticleComment comment) {
+        return new ArticleCommentDto(comment.getId(), comment.getText(), comment.getUser(),
+                comment.getArticle().getId());
     }
 }

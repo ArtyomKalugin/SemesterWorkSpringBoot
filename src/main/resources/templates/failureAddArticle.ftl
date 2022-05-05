@@ -8,7 +8,7 @@
 <#macro content>
     <br>
 
-    <h1>Ошибка создания рецепта!</h1>
+    <h1>Ошибка создания статьи!</h1>
     <br>
 
     <div class="alert alert-danger" role="alert">

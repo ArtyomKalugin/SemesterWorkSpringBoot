@@ -37,7 +37,6 @@
         <br>
 
         <#if recipeComments?has_content>
-                <br>
                 <p class="lead"><strong>Комментарии:</strong></p>
 
                 <#list recipeComments as comment>

@@ -94,7 +94,7 @@
             <a class="nav-link" href="/allRecipes">Рецепты</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="allArticles.ftl">Статьи</a>
+            <a class="nav-link" href="/allArticles">Статьи</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/allUsers">Все пользователи</a>

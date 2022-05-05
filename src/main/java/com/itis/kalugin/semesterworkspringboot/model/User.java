@@ -30,6 +30,12 @@ public class User {
     private List<Recipe> recipes;
 
     @OneToMany(cascade = CascadeType.ALL)
+    private List<Article> articles;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ArticleComment> articleComments;
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<RecipeComment> recipeComments;
 
     public User(int id, String nickname, String firstName, String secondName, String avatar,

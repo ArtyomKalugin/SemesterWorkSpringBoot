@@ -95,7 +95,15 @@ public class UserController {
 
     @GetMapping("/detailUser/{userId}")
     public String getDetailUser(@PathVariable("userId") Integer id, HttpSession session) {
+        UserDto userNow = (UserDto) session.getAttribute("user");
         UserDto detailUser = userService.getUserById(id);
+
+        if (userNow != null) {
+            if (userNow.getEmail().equals(detailUser.getEmail())) {
+                return "redirect:/account";
+            }
+        }
+
         int count = recipeService.getAllByUserId(id).size();
 
         session.setAttribute("detailUser", detailUser);

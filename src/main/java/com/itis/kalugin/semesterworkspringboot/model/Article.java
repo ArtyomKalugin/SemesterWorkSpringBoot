@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "recipe")
-public class Recipe {
+@Table(name = "article")
+public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,9 +23,9 @@ public class Recipe {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<RecipeComment> comments;
+    private List<ArticleComment> comments;
 
-    public Recipe(String title, String text, String photo, String data, User user) {
+    public Article(String title, String text, String photo, String data, User user) {
         this.title = title;
         this.text = text;
         this.photo = photo;
@@ -33,7 +33,7 @@ public class Recipe {
         this.user = user;
     }
 
-    public Recipe() {
+    public Article() {
     }
 
     public int getId() {
