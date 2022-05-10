@@ -12,11 +12,11 @@ public class RecipeComment {
 
     private String text;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 

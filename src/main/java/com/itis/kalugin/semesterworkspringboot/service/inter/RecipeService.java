@@ -18,5 +18,7 @@ public interface RecipeService {
 
     List<RecipeDto> getAllByUserId(int userId);
 
+    List<RecipeDto> getRecipesByTitleLikeAndUserId(String title, Integer id);
+
     void deleteRecipeById(int id);
 }

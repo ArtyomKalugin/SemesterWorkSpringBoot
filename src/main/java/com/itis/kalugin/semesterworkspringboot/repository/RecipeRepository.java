@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 
-    List<Recipe> getAllByTitleContaining(String title);
+    List<Recipe> getAllByTitleContains(String title);
+
+    List<Recipe> getAllByTitleContainsAndUserId(String title, Integer id);
 
     @Query(value = "select u from Recipe u where u.user.id = :userId")
     List<Recipe> getAllByUserId(@Param("userId") Integer userId);

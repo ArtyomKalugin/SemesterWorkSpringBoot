@@ -1,5 +1,6 @@
 package com.itis.kalugin.semesterworkspringboot.service.inter;
 
+import com.itis.kalugin.semesterworkspringboot.dto.ArticleDto;
 import com.itis.kalugin.semesterworkspringboot.dto.CreateUserDto;
 import com.itis.kalugin.semesterworkspringboot.dto.UserDto;
 import com.itis.kalugin.semesterworkspringboot.model.User;
@@ -12,6 +13,8 @@ public interface UserService {
     UserDto save(CreateUserDto user);
 
     List<UserDto> getAllUsers();
+
+    List<UserDto> getUsersByNicknameLike(String nickname);
 
     UserDto getUserById(int userId);
 

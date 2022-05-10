@@ -10,10 +10,7 @@ import com.itis.kalugin.semesterworkspringboot.model.User;
 import com.itis.kalugin.semesterworkspringboot.service.inter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -57,6 +54,35 @@ public class ArticleController {
         session.removeAttribute("isMyArticle");
 
         return "allArticles";
+    }
+
+    @GetMapping("/allFindArticles")
+    @ResponseBody
+    public List<ArticleDto> getAllArticlesByTitle(@RequestParam(value = "title",required = false) String title) {
+        List<ArticleDto> articles = articleService.getArticlesByTitleLike(title);
+        articles = articles.stream()
+                .peek(article -> article.setText(TextHelper.editText(article.getText())))
+                .collect(Collectors.toList());
+
+        Collections.reverse(articles);
+
+        return articles;
+    }
+
+    @GetMapping("/allMyFindArticles")
+    @ResponseBody
+    public List<ArticleDto> getAllMyArticlesByTitle(@RequestParam(value = "title",required = false) String title,
+                                                  HttpSession session) {
+        UserDto user = (UserDto) session.getAttribute("user");
+        List<ArticleDto> articles = articleService.getArticlesByTitleLikeAndUserId(title, user.getId());
+
+        articles = articles.stream()
+                .peek(article -> article.setText(TextHelper.editText(article.getText())))
+                .collect(Collectors.toList());
+
+        Collections.reverse(articles);
+
+        return articles;
     }
 
     @GetMapping("/myArticles")

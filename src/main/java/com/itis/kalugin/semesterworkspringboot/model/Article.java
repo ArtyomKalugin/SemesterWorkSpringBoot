@@ -18,11 +18,11 @@ public class Article {
     private String photo;
     private String data;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany()
     private List<ArticleComment> comments;
 
     public Article(String title, String text, String photo, String data, User user) {

@@ -1,7 +1,9 @@
 package com.itis.kalugin.semesterworkspringboot.service.impl;
 
 import com.itis.kalugin.semesterworkspringboot.dto.ArticleDto;
+import com.itis.kalugin.semesterworkspringboot.dto.RecipeDto;
 import com.itis.kalugin.semesterworkspringboot.model.Article;
+import com.itis.kalugin.semesterworkspringboot.model.Recipe;
 import com.itis.kalugin.semesterworkspringboot.repository.ArticleRepository;
 import com.itis.kalugin.semesterworkspringboot.service.inter.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +49,28 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleDto> getArticlesByTitleLike(String title) {
-        List<Article> allArticles = articleRepository.getAllByTitleContaining(title);
+        List<Article> allArticles;
+
+        if (title.isEmpty() || title == null) {
+            allArticles = articleRepository.findAll();
+        } else {
+            allArticles = articleRepository.getAllByTitleContains(title);
+        }
+
+        return allArticles.stream()
+                .map(ArticleDto::fromModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ArticleDto> getArticlesByTitleLikeAndUserId(String title, Integer id) {
+        List<Article> allArticles;
+
+        if (title.isEmpty() || title == null) {
+            allArticles = articleRepository.findAll();
+        } else {
+            allArticles = articleRepository.getAllByTitleContainsAndUserId(title, id);
+        }
 
         return allArticles.stream()
                 .map(ArticleDto::fromModel)

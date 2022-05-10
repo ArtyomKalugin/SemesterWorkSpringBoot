@@ -47,16 +47,43 @@ public class RecipeController {
 
         List<RecipeDto> allRecipes = recipeService.getAll();
         Collections.reverse(allRecipes);
-
         allRecipes = allRecipes.stream()
-                .map(recipe -> new RecipeDto(recipe.getId(), recipe.getTitle(), TextHelper.editText(recipe.getText()),
-                        recipe.getPhoto(), recipe.getData(), recipe.getUserId(), recipe.getUserNickname()))
+                .peek(recipe -> recipe.setText(TextHelper.editText(recipe.getText())))
                 .collect(Collectors.toList());
 
         session.setAttribute("allRecipes", allRecipes);
         session.removeAttribute("isMyRecipe");
 
         return "allRecipes";
+    }
+
+    @GetMapping("/allFindRecipes")
+    @ResponseBody
+    public List<RecipeDto> getAllRecipesByTitle(@RequestParam(value = "title",required = false) String title) {
+        List<RecipeDto> recipes = recipeService.getRecipesByTitleLike(title);
+        recipes = recipes.stream()
+                .peek(recipe -> recipe.setText(TextHelper.editText(recipe.getText())))
+                .collect(Collectors.toList());
+
+        Collections.reverse(recipes);
+
+        return recipes;
+    }
+
+    @GetMapping("/allMyFindRecipes")
+    @ResponseBody
+    public List<RecipeDto> getAllMyRecipesByTitle(@RequestParam(value = "title",required = false) String title,
+                                                  HttpSession session) {
+        UserDto user = (UserDto) session.getAttribute("user");
+        List<RecipeDto> recipes = recipeService.getRecipesByTitleLikeAndUserId(title, user.getId());
+
+        recipes = recipes.stream()
+                .peek(recipe -> recipe.setText(TextHelper.editText(recipe.getText())))
+                .collect(Collectors.toList());
+
+        Collections.reverse(recipes);
+
+        return recipes;
     }
 
     @GetMapping("/myRecipes")

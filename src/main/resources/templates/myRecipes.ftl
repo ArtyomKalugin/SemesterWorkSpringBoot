@@ -6,7 +6,7 @@
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-        function showResult(title) {
+        function showResult() {
 
             let html = ""
             const xmlhttp = new XMLHttpRequest();
@@ -15,29 +15,29 @@
                 if (this.readyState===4 && this.status===200) {
                     let response = JSON.parse(this.response)
 
-                    for (let i = 0; i < response.length; i++) {
-                        html += "<a href='/detailRecipe/" + response[i]['id'] + "'/>"
-                        html += "<div class='alert alert-dark' role='alert'>"
-                        html += "<h2>" + response[i]['title'] +"</h2>"
-                        html += "<div>" + response[i]['text'] +"</div>"
-                        html += "<br>"
-                        html += "<img src=\"" + response[i]['photo'] + "\" width='665' height='350'>"
-                        html += "<br><br>"
-                        html += "<div><small class='text-muted'>" + response[i]['userNickname'] + " " +
-                            response[i]['data'] + "</small></div>"
-                        html += "<div><small class='text-muted'>Рецепт " + response[i]['id'] + "</small></div>"
-                        html += "</div>" + "</a>"
+                    if (response.length !== 0) {
+                        for (let i = 0; i < response.length; i++) {
+                            html += "<a href='/detailRecipe/" + response[i]['id'] + "/1" + "'/>"
+                            html += "<div class='alert alert-dark' role='alert'>"
+                            html += "<h2>" + response[i]['title'] +"</h2>"
+                            html += "<div>" + response[i]['text'] +"</div>"
+                            html += "<br>"
+                            html += "<img src=\"" + response[i]['photo'] + "\" width='665' height='350'>"
+                            html += "<br><br>"
+                            html += "<div><small class='text-muted'>" + response[i]['userNickname'] + " " +
+                                response[i]['data'] + "</small></div>"
+                            html += "<div><small class='text-muted'>Рецепт " + response[i]['id'] + "</small></div>"
+                            html += "</div>" + "</a>"
+                        }
+                    } else {
+                        html = "<p class='lead'>Нет рецептов!</p>"
                     }
 
                     document.getElementById("result").innerHTML = html;
-                } else {
-                    html = "<p class='lead'>" + "Нет рецептов!" + "</p>"
-
-                    document.getElementById("result").innerText = html
                 }
             }
 
-            xmlhttp.open("GET","/allRecipes/" + title, true);
+            xmlhttp.open("GET","/allMyFindRecipes?title=" + document.getElementById('title').value, true);
             xmlhttp.send();
         }
     </script>
@@ -51,7 +51,7 @@
     <form>
         <p class="lead" id="1" style="float: left; margin-right: 50px;">
             Поиск по названию:<br>
-            <input name="title" type="text" onkeyup="showResult(this.value)"><br>
+            <input id="title" name="title" type="text" onkeyup="showResult()"><br>
         </p>
     </form>
 

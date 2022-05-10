@@ -26,16 +26,16 @@ public class User {
     @Column(nullable = false, length = 64)
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Recipe> recipes;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Article> articles;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<ArticleComment> articleComments;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<RecipeComment> recipeComments;
 
     public User(int id, String nickname, String firstName, String secondName, String avatar,

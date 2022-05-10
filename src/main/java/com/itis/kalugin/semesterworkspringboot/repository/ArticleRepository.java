@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
-    List<Article> getAllByTitleContaining(String title);
+    List<Article> getAllByTitleContains(String title);
+
+    List<Article> getAllByTitleContainsAndUserId(String title, Integer id);
 
     @Query(value = "select u from Article u where u.user.id = :userId")
     List<Article> getAllByUserId(@Param("userId") Integer userId);

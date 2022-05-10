@@ -6,7 +6,7 @@
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-        function showResult(title) {
+        function showResult() {
 
             let html = ""
             const xmlhttp = new XMLHttpRequest();
@@ -15,29 +15,30 @@
                 if (this.readyState===4 && this.status===200) {
                     let response = JSON.parse(this.response)
 
-                    for (let i = 0; i < response.length; i++) {
-                        html += "<a href='/detailArticle/" + response[i]['id'] + "'/>"
-                        html += "<div class='alert alert-dark' role='alert'>"
-                        html += "<h2>" + response[i]['title'] +"</h2>"
-                        html += "<div>" + response[i]['text'] +"</div>"
-                        html += "<br>"
-                        html += "<img src=\"" + response[i]['photo'] + "\" width='665' height='350'>"
-                        html += "<br><br>"
-                        html += "<div><small class='text-muted'>" + response[i]['userNickname'] + " " +
-                            response[i]['data'] + "</small></div>"
-                        html += "<div><small class='text-muted'>Статья " + response[i]['id'] + "</small></div>"
-                        html += "</div>" + "</a>"
+                    if (response.length !== 0) {
+                        for (let i = 0; i < response.length; i++) {
+                            html += "<a href='/detailArticle/" + response[i]['id'] + "/1" + "'/>"
+                            html += "<div class='alert alert-dark' role='alert'>"
+                            html += "<h2>" + response[i]['title'] +"</h2>"
+                            html += "<div>" + response[i]['text'] +"</div>"
+                            html += "<br>"
+                            html += "<img src=\"" + response[i]['photo'] + "\" width='665' height='350'>"
+                            html += "<br><br>"
+                            html += "<div><small class='text-muted'>" + response[i]['userNickname'] + " " +
+                                response[i]['data'] + "</small></div>"
+                            html += "<div><small class='text-muted'>Статья " + response[i]['id'] + "</small></div>"
+                            html += "<br><div><small class='text-muted' style='font-size:20px'><a href='/deleteArticle/" + response[i]['id'] + "'>Удалить</a></small></div>"
+                            html += "</div>" + "</a>"
+                        }
+                    } else {
+                        html = "<p class='lead'>Нет статей!</p>"
                     }
 
                     document.getElementById("result").innerHTML = html;
-                } else {
-                    html = "<p class='lead'>" + "Нет статей!" + "</p>"
-
-                    document.getElementById("result").innerText = html
                 }
             }
 
-            xmlhttp.open("GET","/allArticles/" + title, true);
+            xmlhttp.open("GET","/allMyFindArticles?title=" + document.getElementById('title').value, true);
             xmlhttp.send();
         }
     </script>
@@ -51,7 +52,7 @@
     <form>
         <p class="lead" id="1" style="float: left; margin-right: 50px;">
             Поиск по названию:<br>
-            <input name="title" type="text" onkeyup="showResult(this.value)"><br>
+            <input id="title" name="title" type="text" onkeyup="showResult()"><br>
         </p>
     </form>
 

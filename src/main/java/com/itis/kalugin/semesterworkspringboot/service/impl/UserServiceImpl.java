@@ -1,6 +1,7 @@
 package com.itis.kalugin.semesterworkspringboot.service.impl;
 
 import com.cloudinary.utils.ObjectUtils;
+import com.itis.kalugin.semesterworkspringboot.dto.ArticleDto;
 import com.itis.kalugin.semesterworkspringboot.dto.CreateUserDto;
 import com.itis.kalugin.semesterworkspringboot.dto.UserDto;
 import com.itis.kalugin.semesterworkspringboot.helper.CloudinaryHelper;
@@ -44,6 +45,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllUsers() {
         List<User> allUsers = userRepository.findAll();
+
+        return allUsers.stream()
+                .map(UserDto::fromModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDto> getUsersByNicknameLike(String nickname) {
+        List<User> allUsers;
+
+        if (nickname.isEmpty() || nickname == null) {
+            allUsers = userRepository.findAll();
+        } else {
+            allUsers = userRepository.getAllByNicknameContains(nickname);
+        }
 
         return allUsers.stream()
                 .map(UserDto::fromModel)

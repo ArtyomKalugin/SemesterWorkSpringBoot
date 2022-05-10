@@ -17,6 +17,8 @@ public interface ArticleService {
 
     List<ArticleDto> getArticlesByTitleLike(String title);
 
+    List<ArticleDto> getArticlesByTitleLikeAndUserId(String title, Integer id);
+
     List<ArticleDto> getAllByUserId(int userId);
 
     void deleteArticleById(int id);
